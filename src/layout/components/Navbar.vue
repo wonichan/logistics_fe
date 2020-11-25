@@ -23,7 +23,7 @@
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
+            <span>{{ logInorOut }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -44,16 +44,24 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
-    ])
+      'avatar',
+      'token'
+    ]),
+    logInorOut() {
+      return this.token ? 'Log Out' : 'Log In'
+    }
   },
   methods: {
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      if (this.token) {
+        await this.$store.dispatch('user/logout')
+        this.$router.replace(`/`)
+      } else {
+        this.$router.replace(`/login`)
+      }
     }
   }
 }

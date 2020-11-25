@@ -5,6 +5,8 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+import { vehicleRouter } from '@/router/modules/vehicleRouter'
+import { distributionRouter } from '@/router/modules/distributionRouter'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -164,6 +166,10 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
+export const asyncRoutes = [
+  vehicleRouter
+  // distributionRouter
+]
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
